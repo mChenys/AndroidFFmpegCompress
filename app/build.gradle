@@ -14,7 +14,7 @@ android {
     sourceSets.main {
 //        assets.srcDirs = ['/src/main/assets']
         jniLibs.srcDirs = ['libs']//指定jniLibs文件夹路径
-//        jni.srcDirs = []//不编译jni
+        jni.srcDirs = []//不编译jni
 
     }
     buildTypes {

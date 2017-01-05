@@ -30,7 +30,8 @@ public class RecordView extends SurfaceView implements MediaRecorder.OnErrorList
     private Camera mCamera;//相机
     private int mPictureSize;//最大支持的像素
     private OnRecordCallback mOnRecordCallback;
-    private File mRecordFile;//录制的视频
+    private File mRecordFile;//录制的视频文件
+    private File mCompressFile;//压缩后的视频文件
     private MediaRecorder mMediaRecorder;
 
 
@@ -62,24 +63,24 @@ public class RecordView extends SurfaceView implements MediaRecorder.OnErrorList
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(new CustomCallBack());
         mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
-
     }
 
 
     private class CustomCallBack implements SurfaceHolder.Callback {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
+            Log.e(TAG, ">>>>>>>>>>surfaceCreated");
             initCamera();
         }
 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+            Log.e(TAG, ">>>>>>>>>>surfaceChanged");
         }
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
+            Log.e(TAG, ">>>>>>>>>>surfaceDestroyed");
             releaseCamera();
         }
     }
@@ -315,10 +316,12 @@ public class RecordView extends SurfaceView implements MediaRecorder.OnErrorList
 
             @Override
             public void onFinish() {
-
                 if (null != mOnRecordCallback) {
+                    mOnRecordCallback.onProgress(maxDuration, maxDuration);
                     mOnRecordCallback.onFinish();
                 }
+                stopRecord();
+
             }
         }.start();
     }
@@ -351,7 +354,7 @@ public class RecordView extends SurfaceView implements MediaRecorder.OnErrorList
         if (null != mCamera) {
             try {
                 mCamera.setPreviewCallback(null);
-                mCamera.setPreviewDisplay(null);
+//                mCamera.setPreviewDisplay(null);
                 mCamera.stopPreview();
                 mCamera.lock();
                 mCamera.release();
@@ -373,11 +376,45 @@ public class RecordView extends SurfaceView implements MediaRecorder.OnErrorList
     }
 
     /**
-     * 返回录像文件
+     * 返回录像文件地址
      *
      * @return recordFile
      */
+    public String getRecordFilePath() {
+        return null == mRecordFile ? "" : mRecordFile.getPath();
+    }
+
     public File getRecordFile() {
         return mRecordFile;
+    }
+
+    private String compressFilePath;
+
+    public void setCompressFilePath(String path) {
+        this.mCompressFile = new File(path);
+        this.compressFilePath = path;
+    }
+
+    public String getCompressFilePath() {
+        return compressFilePath;
+    }
+
+    /**
+     * 返回录制文件的大小
+     *
+     * @return mb
+     */
+    public float getRecordFileSize() {
+        return null == mRecordFile ? 0f : mRecordFile.length() / (1024f * 1024f);
+    }
+
+
+    /**
+     * 返回压缩后录制文件的大小
+     *
+     * @return mb
+     */
+    public float getCompressFileSize() {
+        return null == mCompressFile ? 0f : mCompressFile.length() / (1024 * 1024) * 1.0f;
     }
 }

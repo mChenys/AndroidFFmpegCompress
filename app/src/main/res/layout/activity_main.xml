@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +7,59 @@
     android:orientation="vertical"
     tools:context="mchenys.net.csdn.blog.testffmpeg.MainActivity">
 
-    <SurfaceView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
+        >
+
+        <mchenys.net.csdn.blog.testffmpeg.RecordView
+            android:id="@+id/recordView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ScrollView
+            android:layout_marginBottom="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"
+                android:textSize="16sp"/>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="10dp"
+            android:drawableLeft="@drawable/bg_red"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|left"
+            android:layout_margin="10dp"
+            android:textColor="#fff"
+            android:textSize="18sp"/>
+    </FrameLayout>
+
 
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -58,4 +105,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

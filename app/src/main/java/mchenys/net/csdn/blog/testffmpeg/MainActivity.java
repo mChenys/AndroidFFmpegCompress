@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
         mDurationTv.setText("");
         mCompressInfoTv.setText("");
         mVideoSizeTv.setText("");
+        mCompressInfoTv.setVisibility(View.GONE);
     }
 
     //开始录制

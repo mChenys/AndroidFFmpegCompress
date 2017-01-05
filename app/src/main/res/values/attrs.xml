@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="width" format="integer"/>
+    <attr name="height" format="integer"/>
+    <attr name="maxDuration" format="integer"/>
+
+    <declare-styleable name="RecorderView">
+        <attr name="width"/>
+        <attr name="height"/>
+        <attr name="maxDuration"/>
+    </declare-styleable>
+</resources>
